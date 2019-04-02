@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 3</title>
+    <script src="https://unpkg.com/vue"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <h1 v-if="status"> {{ titulo }} </h1>
+        <p v-else>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero dolore, in placeat cupiditate, ipsa labore recusandae repellat, minima quibusdam incidunt corporis. Ipsa sint laudantium, neque asperiores voluptatibus dolore animi officia!</p>
+        <div>
+            <p>Id: {{ usuario.id }}</p>
+            <p>Nome: {{ usuario.nome }}</p>
+            <p>Profissão: {{ usuario.profissao }}</p>
+        </div>
+
+    </div>
+    
+</body>
+</html>
+
+<!-- script vue -->
+<script>
+    var app = new Vue({
+
+       el:"#app",
+       data:{
+           titulo:"Aula 3 de Vue js",
+           status: false,
+           usuario:{
+               id: 1,
+               nome: "Willian Bello",
+               profissao: "Ator"
+           }
+       }
+    });
+
+</script>
