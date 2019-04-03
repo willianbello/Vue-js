@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 9 Vue js - Filtros</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <h1> {{ titulo }} </h1>
+        <ul>
+            <li v-for="usuario in usuarios"> {{ usuario.nome | maiuscula('a', 'b') | truncar('10') }}</li>
+        </ul>
+        <form action="http://google.com">
+            <button type="submit" @click.prevent.stop="">Enviar</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 9 Vue js - Filtros",
+            usuarios: [
+                { nome: "Willian Bello" },
+                { nome: "Jose Almeida" },
+                { nome: "Carlos Silva" }
+            ]
+        },
+
+        filters:{
+            maiuscula(str, param1, param2){
+                console.log('param1', param1);
+                console.log('param2', param2);
+                return str.toUpperCase();
+            },
+
+            truncar(str, tam){
+                if (str.length > tam){
+                    str = str.substring(0, tam) + "...";
+                }
+                console.log(str);
+                return str;
+            },
+        }
+    });
+</script>
