@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 6 - Diretivas | v-bind</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .colorBlue{ color: blue; }
+        .colorRed { color: red; }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h1>{{ titulo }}</h1>
+        <img v-bind:src="imagem1" :alt="altImagem1" title="" id="" :data-img-large="'https://cdn-images-1.medium.com/max/1800/1*OrjCKmou1jT4It5so5gvOA.jpeg'">
+        <p :class="corTexto">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt, laudantium aspernatur enim in voluptatem veniam esse libero aut ipsam id numquam distinctio vel quam assumenda odit obcaecati sequi! Beatae, maiores!</p>
+    </div>
+
+</body>
+</html>
+
+<!-- script vue -->
+<script>
+    var app = new Vue ({
+        el:"#app",
+        data:{
+            titulo: "Aula 6 Vue js - Diretivas | v-bind",
+            imagem1: "https://cdn-images-1.medium.com/max/1800/1*OrjCKmou1jT4It5so5gvOA.jpeg",
+            altImagem1: "Imagem do Vue js",
+            corTexto: "colorBlue"
+        }
+    });
+</script>
