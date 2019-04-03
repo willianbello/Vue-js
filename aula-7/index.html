@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 7 - Diretivas v-bind, classes e estilo</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <h3> {{ titulo }} </h3>
+
+        <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">Limpar</button>
+        <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">Enviar</button>
+    </div>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 7 Vue js - Diretivas v-bind, classes e estilo",
+            
+            btnClassLimpar: {
+                'btn-danger':true,
+                'btn-sm': false
+            },
+
+            btnClassEnviar: [
+                'btn-primary', { 'btn-lg': false }
+            ],
+
+            btnStyleLimpar: [
+                {'font-size': "30px"},
+                {'color': 'black'},
+                {'text-transform': 'lowercase'},
+            ],
+
+            btnStyleEnviar: {
+                'font-size': '15px',
+                'text-transform': 'uppercase',
+            }
+        }
+    });
+
+</script>
