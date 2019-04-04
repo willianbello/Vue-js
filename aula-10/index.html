@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 10 Vue js - Propriedade Computed e Watch</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <h1> {{ titulo }} </h1>
+        <p> {{ nomeCompleto }} </p>
+
+    </div>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 10 Vue js - Propriedades Computed e Watch",
+            primeiroNome: "",
+            ultimoNome: "",
+            //nomeCompleto: ""
+        },
+
+        computed: {
+            nomeCompleto(){
+                return this.primeiroNome + " " + this.ultimoNome;
+            }
+        },
+
+        watch: {
+            primeiroNome(novoValor){
+                this.atualizaUsuario();
+            },
+            /* primeiroNome(novoValor){
+                this.nomeCompleto = novoValor + " " + this.ultimoNome;
+            },
+            ultimoNome(novoValor){
+                this.nomeCompleto = this.primeiroNome + " " + novoValor;
+            } */
+        },
+
+        methods: {
+            atualizaUsuario(){
+                console.log('Usuario Atualizado');
+            }
+        }
+    });
+</script>
