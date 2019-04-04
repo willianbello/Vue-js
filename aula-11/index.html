@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 11 Vue js - LifeCycle e Hook</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        @keyframes load {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes aparecer {
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+
+        #loading{
+            border-top: 3px solid rgb(111, 111, 228);
+            border-radius: 100%;
+            height: 50px;
+            width: 50px;
+            animation-name: load;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            animation-play-state: running;
+            animation-iteration-count: infinite;
+            position: relative;
+            display: inline-block;    
+        }
+
+        .loadingText{
+            animation: none;
+        }
+
+        #boxLoading {
+            animation: aparecer 2s 2 alternate both;
+        }
+
+        .tabela {
+            width: 100%;
+            height: 500px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .tabela-centralizada {
+            display: table;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        .cell-centralizada {
+            display: table-cell;
+            margin: 0;
+            padding: 20px;
+            vertical-align: middle;
+            color: black;
+        }
+
+        .texto-centro {
+            margin-top: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h3> {{ titulo }}</h3>
+        <table :class="tabela" v-if="loadStatus" id="boxLoading">
+            <tr :class="tr">
+                <td :class="td">
+                    <div id="loading"></div><p style="padding: 20px; font-weight: bold;"> {{ loadingText }} </p>
+                </td>
+            </tr>
+        </table>
+        <h3 v-if="carregadoStatus" :class="tCentro"> {{ inicio }} </h1>
+    </div>
+    
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+
+    var app = new Vue ({
+        
+        el: "#app",
+        
+        beforeCreate() {
+            setTimeout(function(){
+                app.loadStatus = true
+            }, 500);
+            console.log("beforeCreate");
+            console.log(this.$el);
+        },
+
+        created() {    
+            console.log("created");
+            console.log(this.$el);
+        },
+
+        beforeMount() {
+            console.log("beforeMount");
+            console.log(this.$el);
+        },
+
+        mounted() {
+            console.log("mounted");
+            console.log(this.$el);
+            setTimeout(function(){
+                app.loadStatus = false,
+                app.carregadoStatus = true
+            }, 5000);
+        },
+
+        beforeUpdate() {
+            console.log("beforeUpdate");
+            console.log(this.$el);
+        },
+
+        updated() {
+            console.log ("updated");
+            console.log(this.$el);
+        },
+
+        data: {
+            loadingText: "Carregando página",
+            titulo: "Aula 11 Vue js - LifeCycle e Hook",
+            loadStatus: null,
+            carregadoStatus: null,
+            inicio: "Página Carregada com Sucesso",
+            tabela: "tabela",
+            tr: "tabela-centralizada",
+            td: "cell-centralizada",
+            tCentro: "texto-centro"
+        }
+    });
+
+</script>
