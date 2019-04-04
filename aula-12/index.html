@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 12 Vue js - Componentes</title>
+    <script src="vue.js"></script>
+    <style>
+        .botao button{
+            padding: 10px 30px;
+            background-color: blueviolet;
+            border-radius: 5px;
+            border: 1px solid white;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .botao button:hover{
+            background-color: rgb(159, 78, 235);
+            color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <h3> {{ titulo }} </h3>
+        <lista-menu :class="botaoEnviar"></lista-menu>
+        <template id="menu">
+            <div class="botao">
+                <ul>
+                    <li>item 1</li>
+                    <li>item 2</li>
+                </ul>
+                <button>Enviar</button>
+            </div>
+        </template>
+    </div>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+
+    Vue.component('lista-menu', {
+        /* template:
+            `<div>
+                <ul>
+                    <li>item 1</li>
+                    <li>item 2</li>
+                </ul>
+                <button>Enviar</button>
+            </div>`, */
+    });
+
+    Vue.component('lista-menu', {
+        template: "#menu"
+    })
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 12 Vue js - Componentes",
+            botaoEnviar: ["botao"]
+        },
+        
+    });
+</script>
