@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 14 Vue js - Enviando e Recebendo dados entre componentes pais e filhos</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .fundoMenu{ background-color: cornflowerblue; }
+        .listaItens{ display: inline; }
+        .listaItens a { color: white; margin-right: 20px; }
+        .listaItens a:hover { color: indigo; text-decoration: none; }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div id="app">
+        <h3> {{ titulo }} </h3>
+        <menufixo></menufixo>
+    </div>
+
+    <template id="menutopo">
+        <div class="fundoMenu">
+            <itens :itens="topNav" class="p-3" @emit-click="getlink"></itens>
+        </div>
+    </template>
+
+    <template id="lista">
+        <ul>
+            <li v-for="(item, index) in itens" class="listaItens">
+                <a @click.stop.prevent="emitClick(index)" href="#"> {{ item.label }}</a>
+            </li>
+        </ul>
+    </template>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+   
+    Vue.component('menufixo', {
+        template: "#menutopo",
+        data() {
+            return {
+                topNav: [{label: 'Inicio'}, {label: 'Sobre'}, {label: 'Contato'}, {label: 'Localização'}]
+            }
+        },
+        methods: {
+            getlink(index){
+                alert(this.topNav[index].label);
+            }
+        }
+    })
+
+    Vue.component('itens', {
+        template: "#lista",
+        props: {
+            itens:{
+                required: true,
+                type: Array,
+                default: []
+            }
+        },
+        methods: {
+            emitClick(index){
+                this.$emit('emit-click', index);
+            }
+        },
+    })
+
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 14 Vue js - Enviando e Recebendo dados entre Componentes pais e filhos",
+        }
+    });
+</script>
