@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 14/2 Vue js - Transferência de dados entre componentes Pai e componente Filho</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <div id="app">
+        <h3> {{ titulo }} </h3>
+        <pai class="container mt-5"></pai>
+    </div>
+    
+    <template id="formularioPai">
+        <div class="row">
+            <form class="col-md-8">
+                <h3>Elemento Pai</h3>
+                <input readonly type="text" class="form-control mb-3" :value="textinput">
+            </form>
+            <filho class="col-md-8 mt-5" :itens="textoPai" @emit-click="getlink"></filho>
+        </div>
+        
+        
+    </template>
+
+    <template id="formularioFilho">
+        <form>
+            <h3>Elemento Filho</h3>
+            <ul class="navbar-nav">
+                <li v-for="(item, index) in itens" class="nav-item"> 
+                    <a href="#" @click.stop.prevent="enviapai(index)" class="btn btn-primary nav-link m-3"> {{ item.nome }} </a> 
+                </li>
+            </ul>
+        </form>
+    </template>
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+    Vue.component('pai', {
+        template: "#formularioPai",
+        data(){
+            return {
+                textoPai: [{nome: "item 1"}, {nome: "item 2"}, {nome: "item 3"}],
+                textinput: ""
+            }
+        },
+        methods: {
+            getlink(index){
+                this.textinput = this.textoPai[index].nome;
+            }
+        }
+    })
+
+    Vue.component('filho', {
+        template: "#formularioFilho",
+        props:{
+            itens:{
+                type: String | Array | Boolean | Int32Array,
+                default:"texto default"
+            }
+        },
+        methods:{
+            enviapai(index){
+                this.$emit('emit-click', index);
+            }
+        }
+    })
+
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 14/2 Vue js - Transferência de dados entre componentes Pai e componente Filho"
+        },
+    })
+</script>
