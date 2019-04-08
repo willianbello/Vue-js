@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 15 Vue js - Comunicação entre componentes não parentes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    
+    <div id="app" class="container">
+        <h3> {{ titulo }} </h3>
+        <input-form class="mt-5"></input-form>
+        <br><br>
+        <my-list></my-list>
+
+    </div>
+    
+    <template id="form">
+        <div class="card">
+            <div class="card-block container">
+                <div class="form-group">
+                    <label for="">Título</label>
+                    <input v-model="title" type="text" class="form-control">
+                </div>
+                <button @click.stop.prevent="submit()" class="btn btn-primary">Enviar</button><br><br>
+            </div>
+        </div>
+    </template>
+
+    <template id="list">
+        <ul class="list-group" id="list">
+            <li v-for="item in list" class="list-group-item"> {{ item.titulo }} </li>
+        </ul>
+    </template>
+    
+
+</body>
+</html>
+
+<!-- Script Vue -->
+<script>
+
+    Vue.component('input-form', {
+        data(){
+            return {
+                title: "",
+            }
+        },
+
+        template: "#form",
+        methods: {
+            submit(){
+                //this.$eventHub.$emit('submit', this.title);
+                eventBus.$emit('submit', this.title);
+            }
+        },
+    });
+
+    Vue.component('my-list', {
+        data() {
+            return {
+                list: [
+                    { titulo: "ITENS" },
+                ]
+            }
+        },
+        template: "#list",
+        created() {
+            var item = this;
+            //this.$eventHub.$on('submit', function(titulo){
+            eventBus.$on('submit', function(titulo){
+                if (titulo){
+                    item.list.push({ titulo: titulo })
+                }
+            })
+        },
+    });
+
+    var eventBus = new Vue ();
+    //Vue.prototype.$eventHub = new Vue()
+
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 15 Vue js - Comunicação entre componentes não parentes",
+        }
+    });
+</script>
