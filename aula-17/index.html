@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 17 Vue js - Mixins</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div id="app" class="container">
+        <h3> {{ titulo }} </h3>
+        <form action="">
+            <button @click.stop.prevent="getUsers()" class="btn btn-success">GET USERS</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+<!-- script vue -->
+<script>
+    var mixin = {
+        created() {
+            console.log("Hello vue from mixin");          
+        },
+        methods: {
+            getUsers(){
+                // rotina de programação
+                // localizar usuários
+                console.log("get users from mixin");
+            }
+        }
+    }
+    var app = new Vue ({
+        el: "#app",
+
+        mixins: [mixin],
+
+        created(){
+            console.log("Hello vue from vue");
+        },
+
+        data: {
+            titulo: "Aula 17 Vue js - Mixins",
+        },
+
+        methods: {
+            getUsers(){
+                // rotina de programação
+                // localizar usuários
+                console.log("get users from vue");
+            }
+        },
+    });
+</script>
