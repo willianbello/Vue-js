@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 16 Vue js - Slots</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div id="app">
+        <h3>{{ titulo }}</h3>
+        <div class="container">
+            <card>
+                <h5 class="card-title" slot="title">Titulo 1</h5>
+                <template slot="text">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </template>
+                <a href="#" slot="action" class="btn btn-primary">Go somewhere</a>
+            </card>
+        </div>
+        <br>
+        <div class="container">
+            <card>
+                <h5 class="card-title" slot="title">Titulo 2</h5>
+                <template slot="text">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </template>
+                <a href="#" slot="action" class="btn btn-primary">Leia Mais</a>
+            </card>
+        </div>
+    </div>
+
+    <template id="card">
+        <div class="card" style="width: 18rem;">
+            <img src="http://via.placeholder.com/350x150" class="card-img-top" alt="...">
+            <div class="card-body">
+                <slot name="title"></slot>
+                <slot name="text"></slot>
+                <slot name="action"></slot>
+            </div>
+        </div>
+    </template>
+
+
+</body>
+</html>
+
+<!-- script vue -->
+<script>
+
+    Vue.component('card',{
+        template: "#card",
+        data(){
+            return {
+                title: '',
+            }
+        }
+    })
+
+    var app = new Vue ({
+        el: "#app",
+        data: {
+            titulo: "Aula 16 Vue js - Slots"
+        }
+    });
+</script>
