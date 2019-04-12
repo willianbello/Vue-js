@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 18 Vue js - Ajax com Vue Resource</title>
+    <script src="vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .borda { border: 1px solid rgb(184, 184, 184); border-radius: 10px; width: 350px; padding: 15px; }
+        .item { list-style: none; }
+        .verde { color: green; transition: 0.4s; padding: 6px; border-radius: 6px; }
+        .verde:hover { background-color: green; color: white; }
+        .blue { color: blue; }
+    </style>
+</head>
+<body>
+    
+    <div id="app" class="container">
+        <h3 class="mt-5" class="col-md-12"> {{ titulo }} </h3>
+        <div class="row">
+            <resposta class="col-md-6 mt-5"></resposta>
+            <lista class="col-md-6 mt-5"></lista>
+        </div>
+    </div>
+
+    <template id="request">
+        <div class="row" style="height: 100px">
+            <h5 class="blue col-md-6">Componente 1</h5>
+            <button class="btn btn-success col-md-5" style="height: 60px" @click.stop.prevent="getUsers()">Enviar Requisição</button>
+            <h5>Resposta Requisição:</h5>
+            <ul class="borda col-md-12 text-center" >
+                <li v-for="(user, index) in users" class="item" v-if="status"> <a href="#" @click.stop.prevent='enviar(user, index)' class="nav-link verde"> {{ user.name }} </a></li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="list">
+        <div>
+            <h5 class="blue">Componente 2</h5>
+            <h5 class="mt-3">Recebe itens da resposta do Componente 1:</h5>
+            <ul class="mt-3 borda"  style="max-height: 405px; overflow-y: auto;">
+                <li v-for="user in list" class="item"> <a href="#" class="nav-link verde"> {{ user.name }} </a></li>
+            </ul>
+        </div>
+    </template>
+
+</body>
+</html>
+
+<!-- script vue -->
+<script>
+
+    Vue.component('resposta', {
+        template: "#request",
+
+        data(){
+            return{
+                status: false,
+                users: []
+            }
+        },
+
+        methods: {
+            getUsers(){
+                let url = "https://jsonplaceholder.typicode.com/users";
+                axios.get(url).then((resposta)=>{
+                    this.users = resposta.data;
+                    //console.log(resposta.data);
+                    this.status = true;
+                });
+            },
+
+            enviar(user, index){
+                eventBus.$emit('enviar', user, index);
+                console.log(this.users[index].name);
+                this.users.shift(index);
+                //this.users[index] = ;
+            }
+        },
+    });
+
+    Vue.component('lista', {
+        template: "#list",
+        data(){
+            return{
+                list: [
+                    { name: "Itens:" },
+                ],
+                status: false
+            }
+        },
+
+        created() {
+            var item = this;
+            eventBus.$on('enviar',(user)=>{
+                //console.log(user.name)
+                if (user){
+                    item.list.push({ name: user.name })
+                }
+            })
+        },
+    })
+
+    var eventBus = new Vue ();
+
+    var app = new Vue ({
+        el: "#app",
+        updated() {
+            console.log('teste')
+        },
+        data: {
+            titulo: "Aula 18 Vue js - Ajax com Vue Resource",
+            status: false,
+        },
+    });
+</script>
