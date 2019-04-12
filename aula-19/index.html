@@ -6,15 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Aula 19 Vue js - Atributos Especiais</title>
     <script src="vue.js"></script>
+    <style>
+        .fade-enter-active {
+            transition: opacity .5s .7s;
+        }
+
+        .fade-leave-active {
+            transition: transform .5s;
+        }
+
+        .fade-enter {
+            opacity: 0;
+            color: blue;
+        }
+
+        .fade-leave-to {
+            transform: translate(-200px, 0);
+        }
+    </style>
 </head>
 <body>
     
     <div id="app">
         <div class="container">
+            <select v-model="movie">
+                <option value="transformers">Transformers</option>
+                <option value="game-of-thrones">Game of Thrones</option>
+            </select>
             <h3 ref="title"> {{ titulo }} </h3>
-            <component :is="movie">
-                <h4 slot="title"> {{ movie }} </h4>
-            </component>
+            <transition name="fade">
+                <component :is="movie">
+                    <h4 slot="title"> {{ movie }} </h4>
+                </component>
+            </transition>
+
             <!-- <transformers v-if="movie == 'transformers'">
                 <h4 slot="title">Transformers</h4>
             </transformers>
